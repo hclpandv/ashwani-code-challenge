@@ -1,0 +1,2 @@
+mysql://sqluser:123456@localhost/greetingsdb
+mysql --protocol=TCP -u sqluser -p123456 -D greetingsdb -e select * from greetings_tbl;
