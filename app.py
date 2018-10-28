@@ -46,13 +46,5 @@ def greeting_by_id(gr_id):
     result = cursor.fetchall()
     return jsonify(result)
 
-@app.route("/lang/<string:gr_lang>")
-def greeting_by_lang(gr_lang):
-    db = mysql.connect()
-    cursor = db.cursor()
-    cursor.execute("SELECT greeting FROM greetings_tbl WHERE gr_lang = '%s'", gr_lang)
-    result = cursor.fetchall()
-    return jsonify(result)
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
