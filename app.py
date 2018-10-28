@@ -13,6 +13,11 @@ app.config.from_pyfile('database.cfg')
 #app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
+
+@app.route("/version")
+def get_version():
+    return "v1.0.1 \n"
+
 @app.route("/all")
 def all_greetings():
     db = mysql.connect()
@@ -34,12 +39,20 @@ def main():
     return jsonify(result)
 
 @app.route("/<int:gr_id>")
-def greeting_by_id():
+def greeting_by_id(gr_id):
     db = mysql.connect()
     cursor = db.cursor()
-    cursor.execute("SELECT greeting FROM greetings_tbl WHERE gr_id = ?", gr_id)
+    cursor.execute("SELECT greeting FROM greetings_tbl WHERE gr_id = '%s'", gr_id)
+    result = cursor.fetchall()
+    return jsonify(result)
+
+@app.route("/lang/<string:gr_lang>")
+def greeting_by_lang(gr_lang):
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT greeting FROM greetings_tbl WHERE gr_lang = '%s'", gr_lang)
     result = cursor.fetchall()
     return jsonify(result)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=80)

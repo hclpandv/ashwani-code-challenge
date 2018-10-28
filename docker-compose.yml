@@ -1,0 +1,18 @@
+web:
+  build: .
+  command: python app.py
+  ports: 
+    - "4000:80"
+  volumes:
+    - .:/app
+  links:
+    - db
+  hostname: greetingsapp 
+db:
+  hostname: greetingsdb
+  image: mysql/mysql-server:5.7
+  environment:
+    MYSQL_USER: sqluser
+    MYSQL_ROOT_PASSWORD: 123456
+    MYSQL_PASSWORD: 123456
+    MYSQL_DATABASE: greetingsdb
