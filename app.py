@@ -29,6 +29,7 @@ def all_greetings():
         rows.append(row)
     #db.close()
     return jsonify(rows)
+    #return render_template("index.html", rows=results)
 
 @app.route("/")
 def main():
@@ -36,7 +37,8 @@ def main():
     cursor = db.cursor()
     cursor.execute('SELECT greeting FROM greetings_tbl WHERE gr_lang = "En"')
     result = cursor.fetchall()
-    return jsonify(result)
+    #return jsonify(result)
+    return render_template("index.html", result = result)
 
 @app.route("/<int:gr_id>")
 def greeting_by_id(gr_id):
